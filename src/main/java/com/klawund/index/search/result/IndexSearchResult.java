@@ -1,34 +1,17 @@
 package com.klawund.index.search.result;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
+import org.apache.lucene.document.Document;
 
 public class IndexSearchResult
 {
-	private Map<String, Object> data = new HashMap<>();
 	private long count;
 	private long totalCount;
+	private Set<Object> data = new HashSet<>();
 
 	public IndexSearchResult()
 	{
-	}
-
-	public IndexSearchResult(Map<String, Object> data, long totalCount)
-	{
-		this.data = data;
-		this.count = data.size();
-		this.totalCount = totalCount;
-	}
-
-	public Map<String, Object> getData()
-	{
-		return data;
-	}
-
-	public IndexSearchResult setData(Map<String, Object> data)
-	{
-		this.data = data;
-		return this;
 	}
 
 	public long getCount()
@@ -36,10 +19,9 @@ public class IndexSearchResult
 		return count;
 	}
 
-	public IndexSearchResult setCount(long count)
+	public void setCount(long count)
 	{
 		this.count = count;
-		return this;
 	}
 
 	public long getTotalCount()
@@ -47,9 +29,28 @@ public class IndexSearchResult
 		return totalCount;
 	}
 
-	public IndexSearchResult setTotalCount(long totalCount)
+	public void setTotalCount(long totalCount)
 	{
 		this.totalCount = totalCount;
-		return this;
+	}
+
+	public Set<Object> getData()
+	{
+		return data;
+	}
+
+	public void setData(Set<Object> data)
+	{
+		this.data = data;
+	}
+
+	public void add(final Document document)
+	{
+		getData().add(document);
+	}
+
+	public void remove(final Document document)
+	{
+		getData().remove(document);
 	}
 }

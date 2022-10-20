@@ -1,32 +1,31 @@
 package com.klawund.index.search;
 
 import com.klawund.index.search.result.IndexSearchResult;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/index/search")
 public class IndexSearchController
 {
-	private final Logger logger;
 	private final IndexSearchService indexSearchService;
 
 	@Autowired
-	public IndexSearchController(Logger logger, IndexSearchService indexSearchService)
+	public IndexSearchController(IndexSearchService indexSearchService)
 	{
-		this.logger = logger;
 		this.indexSearchService = indexSearchService;
 	}
 
-	@GetMapping
-	public IndexSearchResult search(@RequestParam String query)
+	@PostMapping(path = "find-by-query")
+	public IndexSearchResult findByQuery(@RequestParam String query)
 	{
-		logger.log(Level.INFO, query);
-		return indexSearchService.search(query);
+		return indexSearchService.findByQuery(query);
+	}
+
+	@PostMapping(path = "find-by-filter")
+	public IndexSearchResult findByFilter(@RequestBody Map<String, String> filter)
+	{
+		return indexSearchService.findByFilter(filter);
 	}
 }
